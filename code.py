@@ -7,10 +7,10 @@ save_address = configs.FILE_ADDRESS
 tags = configs.ICONS_TAG_ADDR
 
 # this for loop go through all pages from 1 to 179 in arzdigital website
-for page in range(1, 179):
+for page in tqdm(range(1, 179)):
     res = rq.get(url + str(page))
     if res.status_code == 200:
-        print('web site is good')
+        print('request is good')
         
     soup = bs(res.text, 'html.parser')
     all_tags = soup.find_all('td', class_= tags)
@@ -20,8 +20,7 @@ for page in range(1, 179):
     coin_names, coin_icon = [], []
     for name in all_tags:
         coin_names.append(name.a.span.text)
-    for imgs in all_tags:
-        coin_icon.append(imgs.a.i.img.get('data-src'))
+        coin_icon.append(name.a.i.img.get('data-src'))
     
     # concatinating names with sources
     concatinate = list(zip(coin_names, coin_icon))
