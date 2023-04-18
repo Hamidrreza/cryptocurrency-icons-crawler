@@ -26,7 +26,7 @@ for page in tqdm(range(1, 179)):
     concatinate = list(zip(coin_names, coin_icon))
 
     # this for loop is for getting icons src and downloading,,
-    for coin in concatinate:
+    for coin in tqdm(concatinate):
         contents = rq.get(coin[1], stream=True)
         with open(save_address + coin[0] + '.png', 'wb') as f:
             f.write(contents.content)
